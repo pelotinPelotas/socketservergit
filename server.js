@@ -92,7 +92,7 @@ if (isUseHTTPs) {
 } else {
 	options = {
 		cors: {
-			origin: "*"
+			origin: "https://3141-7dayzent.com/"
 		}
 	};
 
