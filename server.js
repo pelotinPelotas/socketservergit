@@ -39,7 +39,7 @@ function serverHandler(request, response) {
     response.writeHead(200, {
         'Content-Type': 'text/plain'
     });
-    response.write('socketio server running in Docker');
+    response.write('socketio server running in heroku');
     response.end();
 }
 
