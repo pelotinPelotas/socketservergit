@@ -86,9 +86,13 @@ if (isUseHTTPs) {
         };
     }
 
+    options = {
+		cors: {
+			origin: "https://3141-7dayzent.com/"
+		}
+	};
+
     httpApp = httpServer.createServer(options, serverHandler);  // CREATE SERVER IF SSL
-
-
 } else {
 	options = {
 		cors: {
