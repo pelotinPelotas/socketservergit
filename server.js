@@ -7,8 +7,6 @@ var cors = require('cors');
 const RTCMultiConnectionServer = require('./node_scripts/index.js');
 
 var PORT = 9001;
-var isUseHTTPs =false;
-
 const jsonPath = {
 	config: 'config.json',
 	listeninglogs: 'logs.json'
@@ -21,13 +19,12 @@ const getBashParameters = RTCMultiConnectionServer.getBashParameters;
 var config = getValuesFromConfigJson(jsonPath);
 config = getBashParameters(config, BASH_COLORS_HELPER);
 
+var isUseHTTPs =config.isUseHTTPs;
+
 // if user didn't modifed "PORT" object
 // then read value from "config.json"
 if(PORT === 9001) {
     PORT = config.port;
-}
-if(isUseHTTPs === false) {
-    isUseHTTPs = config.isUseHTTPs;
 }
 
 function serverHandler(request, response) {
@@ -39,7 +36,7 @@ function serverHandler(request, response) {
     response.writeHead(200, {
         'Content-Type': 'text/plain'
     });
-    response.write('socketio server running in heroku');
+    response.write('socketio server running in Heroku');
     response.end();
 }
 
@@ -86,13 +83,9 @@ if (isUseHTTPs) {
         };
     }
 
-    options = {
-		cors: {
-			origin: "https://3141-7dayzent.com/"
-		}
-	};
-
     httpApp = httpServer.createServer(options, serverHandler);  // CREATE SERVER IF SSL
+
+
 } else {
 	options = {
 		cors: {
@@ -100,7 +93,7 @@ if (isUseHTTPs) {
 		}
 	};
 
-	httpApp = httpServer.createServer(serverHandler);	// CREATE SERVER IF NOT SSL
+	httpApp = httpServer.createServer(options, serverHandler);	// CREATE SERVER IF NOT SSL
 }
 
 RTCMultiConnectionServer.beforeHttpListen(httpApp, config);
